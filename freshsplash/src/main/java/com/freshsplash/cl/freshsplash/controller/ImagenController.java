@@ -18,8 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.freshsplash.cl.freshsplash.model.Imagen;
 import com.freshsplash.cl.freshsplash.service.ImagenService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/imagenes")
+@Tag(name = "Api que administra las imagenes de los baños")
+
 public class ImagenController {
 
     @Autowired
@@ -34,6 +39,8 @@ public class ImagenController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Esta api buscara la imagen de un baño", description = "Esta api permitira buscar las imagenes de un baño especifico")
+
     public ResponseEntity<Imagen> buscar(@PathVariable Long id) {
         try {
             Imagen imagen = imagenService.findById(id);
@@ -44,12 +51,16 @@ public class ImagenController {
     }
 
     @PostMapping
+    @Operation(summary = "Esta api guardara la imagen de un baño", description = "Esta api permitira guardar las imagenes de los baños")
+
     public ResponseEntity<Imagen> guardar(@RequestBody Imagen imagen) {
         Imagen imagenNueva = imagenService.save(imagen);
         return ResponseEntity.status(HttpStatus.CREATED).body(imagenNueva);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Esta api actualizara la imagen de un baño", description = "Esta api permitira actualizar las imagenes de un baño especifico")
+
     public ResponseEntity<Imagen> actualizar(@PathVariable Long id, @RequestBody Imagen imagen) {
         try {
             imagenService.save(imagen);
@@ -60,6 +71,8 @@ public class ImagenController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Esta api modificara la imagen de un baño", description = "Esta api permitira modificar las imagenes de un baño especifico")
+
     public ResponseEntity<Imagen> patchImagen(@PathVariable Long id, @RequestBody Imagen partialImagen) {
         try {
             Imagen updatedImagen = imagenService.patchImagen(id, partialImagen);
@@ -70,6 +83,8 @@ public class ImagenController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Esta api eliminara la imagen de un baño", description = "Esta api permitira eliminar las imagenes de un baño especifico")
+
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
             imagenService.delete(id);

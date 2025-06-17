@@ -18,14 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.freshsplash.cl.freshsplash.model.Bano;
 import com.freshsplash.cl.freshsplash.service.BanoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/baños")
+@Tag(name = "Api que administra la informacion de los baños")
 public class BanoController {
 
     @Autowired
     private BanoService banoService;
 
     @GetMapping
+
+    @Operation(summary = "Esta api listara los baño", description = "Esta permitira api listar todos los baños")
     public ResponseEntity<List<Bano>> listar() {
         List<Bano> banos = banoService.findAll();
         if (banos.isEmpty()) {
@@ -35,6 +41,7 @@ public class BanoController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Esta api buscara un baño", description = "Esta permitira api buscar un baño especifico")
     public ResponseEntity<Bano> buscar(@PathVariable Long id) {
         try {
             Bano bano = banoService.findById(id);
@@ -45,12 +52,14 @@ public class BanoController {
     }
 
     @PostMapping
+    @Operation(summary = "Esta api guardara los baño", description = "Esta permitira api guardar todos los baños")
     public ResponseEntity<Bano> guardar(@RequestBody Bano bano) {
         Bano banoNuevo = banoService.save(bano);
         return ResponseEntity.status(HttpStatus.CREATED).body(banoNuevo);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Esta api actualizara un baño", description = "Esta permitira api actualizar un baño especifico")
     public ResponseEntity<Bano> actualizar(@PathVariable Long id, @RequestBody Bano bano) {
         try {
             banoService.save(bano);
@@ -61,6 +70,7 @@ public class BanoController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Esta api modificara un baño", description = "Esta permitira api modificar un atributo especifico")
     public ResponseEntity<Bano> patchBano(@PathVariable Long id, @RequestBody Bano partialBano) {
         try {
             Bano updatedBano = banoService.patchBano(id, partialBano);
@@ -71,6 +81,7 @@ public class BanoController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Esta api eliminara un baño", description = "Esta api permitira eliminar un baño especifico")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
             banoService.delete(id);

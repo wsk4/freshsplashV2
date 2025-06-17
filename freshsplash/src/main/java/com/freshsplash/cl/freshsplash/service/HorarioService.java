@@ -1,5 +1,6 @@
 package com.freshsplash.cl.freshsplash.service;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +56,18 @@ public class HorarioService {
         } else {
             return null;
         }
+    }
+
+    public List<Horario> findByDiaSemana(String diaSemana) {
+        return horarioRepository.findByDiaSemana(diaSemana);
+    }
+
+    public List<Horario> findByHoraApertura(List<LocalTime> horaApertura) {
+        return horarioRepository.findByHoraAperturaIn(horaApertura);
+    }
+
+    public List<Horario> findByHoraCierre(List<LocalTime> horaCierre) {
+        return horarioRepository.findByHoraCierreIn(horaCierre);
     }
 
 }

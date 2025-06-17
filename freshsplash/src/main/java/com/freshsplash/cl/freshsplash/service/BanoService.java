@@ -40,6 +40,10 @@ public class BanoService {
 
             Bano banoToUpdate = banoOptional.get();
 
+            if (parcialBano.getCapacidad() != null) {
+                banoToUpdate.setCapacidad(parcialBano.getCapacidad());
+            }
+
             if (parcialBano.getEtiqueta() != null) {
                 banoToUpdate.setEtiqueta(parcialBano.getEtiqueta());
             }

@@ -163,6 +163,7 @@ public class DataLoader implements CommandLineRunner {
         for (i = 0; i < 15; ++i) {
             Bano bano = new Bano();
             bano.setId(i + 1);
+            bano.setCapacidad(faker.number().numberBetween(1, 10));
             bano.setCalificacion(calificacion.get(random.nextInt(calificacion.size())));
             bano.setEtiqueta(etiqueta.get(random.nextInt(etiqueta.size())));
             bano.setImagen(imagen.get(random.nextInt(imagen.size())));

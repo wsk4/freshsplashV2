@@ -18,14 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.freshsplash.cl.freshsplash.model.Calificacion;
 import com.freshsplash.cl.freshsplash.service.CalificacionService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/calificaciones")
+@Tag(name = "Api que controla las comentarios y puntuaciones de los baños")
 public class CalificacionController {
 
     @Autowired
     private CalificacionService calificacionService;
 
     @GetMapping
+    @Operation(summary = "Esta api llama a todas las calificaciones de los baños", description = "Esta api llama a todos los comentarios y las puntuaciones que coloca la gente de los baños")
     public ResponseEntity<List<Calificacion>> listar() {
         List<Calificacion> calificaciones = calificacionService.findAll();
         if (calificaciones.isEmpty()) {
@@ -35,6 +40,7 @@ public class CalificacionController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Esta api llama a una calificacion especifica de un baño", description = "Esta api llama al comentario y calificacion especifica que se le ha colocado a un baño")
     public ResponseEntity<Calificacion> buscar(@PathVariable Long id) {
         try {
             Calificacion calificacion = calificacionService.findById(id);
@@ -45,12 +51,14 @@ public class CalificacionController {
     }
 
     @PostMapping
+    @Operation(summary = "Esta api guarda una calificacion de los baño", description = "Esta api guarda un comentario nuevo y calificacion nueva que se le ha colocado a un baño")
     public ResponseEntity<Calificacion> guardar(@RequestBody Calificacion calificacion) {
         Calificacion calificacionNueva = calificacionService.save(calificacion);
         return ResponseEntity.status(HttpStatus.CREATED).body(calificacionNueva);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Esta api actualizara una calificacion de un baño", description = "Esta api actualizara un comentario y calificacion ya creados que se le ha colocado a un baño")
     public ResponseEntity<Calificacion> actualizar(@PathVariable Long id, @RequestBody Calificacion calificacion) {
         try {
             calificacionService.save(calificacion);
@@ -61,6 +69,7 @@ public class CalificacionController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Esta api modificara una calificacion de un baño", description = "Esta api permitira modificar un comentario o calificacion ya creados que se le haya colocado a un baño")
     public ResponseEntity<Calificacion> patchCalificacion(@PathVariable Long id, @RequestBody Calificacion partialCalificacion) {
         try {
             Calificacion updatedCalificacion = calificacionService.patchCalificacion(id, partialCalificacion);
@@ -71,6 +80,7 @@ public class CalificacionController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Esta api borrara la calificacion de un baño", description = "Esta api borrara un comentario y calificacion de un baño")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
             calificacionService.delete(id);

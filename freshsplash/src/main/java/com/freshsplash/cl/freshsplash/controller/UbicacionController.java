@@ -18,14 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.freshsplash.cl.freshsplash.model.Ubicacion;
 import com.freshsplash.cl.freshsplash.service.UbicacionService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/ubicaciones")
+@Tag(name = "Api que administra las ubicaciones de los baños")
 public class UbicacionController {
 
     @Autowired
     private UbicacionService ubicacionService;
 
     @GetMapping
+    @Operation(summary = "Esta api listara las ubicaiones de los baño", description = "Esta api permitira listar las ubicaciones de los baño")
     public ResponseEntity<List<Ubicacion>> listar() {
         List<Ubicacion> ubicaciones = ubicacionService.findAll();
         if (ubicaciones.isEmpty()) {
@@ -35,6 +40,7 @@ public class UbicacionController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Esta api buscara la ubicacion de un baño", description = "Esta api permitira buscar la ubicacion de un baño especifico")
     public ResponseEntity<Ubicacion> buscar(@PathVariable Long id) {
         try {
             Ubicacion ubicacion = ubicacionService.findById(id);
@@ -45,12 +51,14 @@ public class UbicacionController {
     }
 
     @PostMapping
+    @Operation(summary = "Esta api guardara la imagen de un baño", description = "Esta api permitira gaurdar las ubicacion de los baño")
     public ResponseEntity<Ubicacion> guardar(@RequestBody Ubicacion ubicacion) {
         Ubicacion ubicacionNueva = ubicacionService.save(ubicacion);
         return ResponseEntity.status(HttpStatus.CREATED).body(ubicacionNueva);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Esta api actualizara la ubicacion de un baño", description = "Esta api permitira actualizar la ubicacion de un baño especifico")
     public ResponseEntity<Ubicacion> actualizar(@PathVariable Long id, @RequestBody Ubicacion ubicacion) {
         try {
             ubicacionService.save(ubicacion);
@@ -61,6 +69,7 @@ public class UbicacionController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Esta api modificara la ubicacion de un baño", description = "Esta api permitira modificar la ubicacion de un baño especifico")
     public ResponseEntity<Ubicacion> patchUbicacion(@PathVariable Long id, @RequestBody Ubicacion partialUbicacion) {
         try {
             Ubicacion updatedUbicacion = ubicacionService.patchUbicacion(id, partialUbicacion);
@@ -71,6 +80,7 @@ public class UbicacionController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Esta api eliminara la ubicacion de un baño", description = "Esta api permitira eliminar la ubicaicon de un baño especifico")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
             ubicacionService.delete(id);
@@ -78,6 +88,41 @@ public class UbicacionController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/pais/{pais}")
+    @Operation(summary = "Esta api obtendra la ubicacion segun el pais ", description = "Esta api permitira obtener la ubicaicon de un baño segun el pais que se este solicitando")
+    public ResponseEntity<List<Ubicacion>> buscarPorPais(@PathVariable String pais) {
+        List<Ubicacion> ubicaciones = ubicacionService.findByPais(pais);
+        return ubicaciones.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(ubicaciones);
+    }
+
+    @GetMapping("/region/{region}")
+    @Operation(summary = "Esta api obtendra la ubicacion segun la region ", description = "Esta api permitira obtener la ubicaicon de un baño segun la region que se este solicitando")
+    public ResponseEntity<List<Ubicacion>> buscarPorRegion(@PathVariable String region) {
+        List<Ubicacion> ubicaciones = ubicacionService.findByRegion(region);
+        return ubicaciones.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(ubicaciones);
+    }
+
+    @GetMapping("/ciudad/{ciudad}")
+    @Operation(summary = "Esta api obtendra la ubicacion segun la comuna", description = "Esta api permitira obtener la ubicacion de un baño segun la ciudad que se esta solicitando")
+    public ResponseEntity<List<Ubicacion>> buscarPorCiudad(@PathVariable String ciudad) {
+        List<Ubicacion> ubicaciones = ubicacionService.findByCiudad(ciudad);
+        return ubicaciones.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(ubicaciones);
+    }
+
+    @GetMapping("/comuna/{comuna}")
+    @Operation(summary = "Esta api obtendra la ubicacion segun la comuna ", description = "Esta api permitira obtener la ubicaicon de un baño segun la comuna que se este solicitando")
+    public ResponseEntity<List<Ubicacion>> buscarPorComuna(@PathVariable String comuna) {
+        List<Ubicacion> ubicaciones = ubicacionService.findByComuna(comuna);
+        return ubicaciones.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(ubicaciones);
+    }
+
+    @GetMapping("/direccion/{direccion}")
+    @Operation(summary = "Esta api obtendra la ubicacion segun la direccion ", description = "Esta api permitira obtener la ubicaicon de un baño segun la direccion que se este solicitando")
+    public ResponseEntity<List<Ubicacion>> buscarPorDireccion(@PathVariable String direccion) {
+        List<Ubicacion> ubicaciones = ubicacionService.findByDireccion(direccion);
+        return ubicaciones.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(ubicaciones);
     }
 
 }

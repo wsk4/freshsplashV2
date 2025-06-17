@@ -62,4 +62,24 @@ public class UbicacionService {
         }
     }
 
+    public List<Ubicacion> findByPais(String pais) {
+        return ubicacionRepository.findByPais(pais);
+    }
+
+    public List<Ubicacion> findByRegion(String region) {
+        return ubicacionRepository.findByRegion(region);
+    }
+
+    public List<Ubicacion> findByCiudad(String ciudad) {
+        return ubicacionRepository.findByCiudad(ciudad);
+    }
+
+    public List<Ubicacion> findByComuna(String comuna) {
+        return ubicacionRepository.findByComuna(comuna);
+    }
+
+    public List<Ubicacion> findByDireccion(String direccion) {
+        return ubicacionRepository.findByDireccion(direccion);
+    }
+
 }

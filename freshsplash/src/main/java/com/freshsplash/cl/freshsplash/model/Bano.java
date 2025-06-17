@@ -1,5 +1,6 @@
 package com.freshsplash.cl.freshsplash.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,9 @@ public class Bano {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column
+    private Integer capacidad;
 
     @ManyToOne
     @JoinColumn(name = "etiqueta_id", nullable = false)
