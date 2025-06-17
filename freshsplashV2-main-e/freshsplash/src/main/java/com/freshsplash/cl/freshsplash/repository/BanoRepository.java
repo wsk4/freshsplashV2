@@ -10,12 +10,10 @@ import com.freshsplash.cl.freshsplash.model.Bano;
 import com.freshsplash.cl.freshsplash.model.Etiqueta;
 
 @Repository
-public interface BanoRepository extends JpaRepository<Bano, Long> {
+public interface BanoRepository extends JpaRepository<Bano, Integer> {
 
     List<Bano> findByetiqueta(Etiqueta etiqueta);
 
     List<Bano> findByHorarioIn(List<LocalTime> horarioApertura);
-
-    Bano findById(Integer id);
 
 }

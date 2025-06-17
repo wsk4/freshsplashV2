@@ -22,7 +22,7 @@ public class BanoService {
         return banoRepository.findAll();
     }
 
-    public Bano findById(Long id) {
+    public Bano findById(Integer id) {
         return banoRepository.findById(id).orElse(null);
     }
 
@@ -30,11 +30,11 @@ public class BanoService {
         return banoRepository.save(bano);
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         banoRepository.deleteById(id);
     }
 
-    public Bano patchBano(Long id, Bano parcialBano) {
+    public Bano patchBano(Integer id, Bano parcialBano) {
         Optional<Bano> banoOptional = banoRepository.findById(id);
         if (banoOptional.isPresent()) {
 
